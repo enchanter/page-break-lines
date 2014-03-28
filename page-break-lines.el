@@ -67,6 +67,11 @@
   :type 'character
   :group 'page-break-lines)
 
+(defcustom page-break-lines-right-margin 2
+  "Margin to the right edge of the window."
+  :type '(integer)
+  :group 'page-break-lines)
+
 (defcustom page-break-lines-modes
   '(emacs-lisp-mode lisp-mode scheme-mode compilation-mode outline-mode help-mode)
   "Modes in which to enable `page-break-lines-mode'."
@@ -89,7 +94,7 @@ If the buffer inside WINDOW has `page-break-lines-mode' enabled,
 its display table will be modified as necessary."
   (with-current-buffer (window-buffer window)
     (if page-break-lines-mode
-        (let ((width (- (window-width window) 1)))
+        (let ((width (- (window-width window) (1+ page-break-lines-right-margin))))
           (unless buffer-display-table
             (setq buffer-display-table (make-display-table)))
           (aset buffer-display-table ?\^L
